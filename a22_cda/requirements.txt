@@ -8,5 +8,6 @@ pypdf2==3.0.1
 openpyxl==3.1.2
 python-dotenv==1.0.0
 pywin32==306
+fpdf==1.7.2
 
 #pyinstaller --onefile -w nome_do_arquivo
