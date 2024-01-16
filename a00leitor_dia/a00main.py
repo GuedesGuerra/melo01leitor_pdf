@@ -82,19 +82,20 @@ class LeitorDeGia():
                 page: Page = doc[0]
                 page.clean_contents()
 
-                rect = Rect(a23_descricao)
-                if VISUALIZE:
-                    page.draw_rect(rect, width=1.5, color=(0, 0, 1))
-                    cliente = page.get_textbox(rect)
+                if "201111.pdf" in arq:
+                    rect = Rect(a23_descricao)
+                    if VISUALIZE:
+                        page.draw_rect(rect, width=1.5, color=(0, 0, 1))
+                        cliente = page.get_textbox(rect)
 
 
 
-                    print(type(cliente))
-                    print(cliente)
-                    output_path = f"b00_localizador_de_coordenadas{0}.pdf"  # Especifique o caminho e nome do arquivo de saída
-                    doc.save(output_path)
-                    self.abrir_pdf(output_path)
-                    break
+                        print(type(cliente))
+                        print(cliente)
+                        output_path = f"b00_localizador_de_coordenadas{0}.pdf"  # Especifique o caminho e nome do arquivo de saída
+                        doc.save(output_path)
+                        self.abrir_pdf(output_path)
+                        break
 
     def abrir_pdf(self, nome_arquivo):
         try:
@@ -113,14 +114,33 @@ def planilhar_files(path, name):
     df = pd.DataFrame(df)
     df.to_excel(f'{name}.xlsx', index=False)
 
+def renomear_arquivos(caminho_pasta):
+  """
+  Renomeia todos os arquivos em uma pasta.
+
+  Args:
+    caminho_pasta: Caminho para a pasta a ser renomeada.
+    novo_nome: Novo nome para os arquivos.
+  """
+
+  arquivos = os.listdir(caminho_pasta)
+
+  for arquivo in arquivos:
+    novo_nome = arquivo.split(" ")
+    dia = novo_nome[0]
+    ano = novo_nome[1].split(".")[0]
+    novo_nome = f"{ano}{dia}"
+    novo_caminho = os.path.join(caminho_pasta, f'{novo_nome}.pdf') 
+    os.rename(f"{caminho_pasta}\\{arquivo}", novo_caminho)
+
 if __name__ == "__main__":
     app = LeitorDeGia()
     lista = []
+    # path = r"_resources_\GIAs"
     path = r"_resources_\GIAs"
-    # path = r"_resources_"
 
-    descricao = a23_descricao = (230, 450, 290, 470)
-
+    descricao = a23_descricao = (380, 315, 470, 329)
+    # renomear_arquivos(path)
     # app.localizador_de_coordenadas(path, descricao)
     app._ininicializador(path, path)
     app._captura_de_gia()
