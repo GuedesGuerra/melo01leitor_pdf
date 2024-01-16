@@ -13,19 +13,20 @@ def txt_to_pdf(txt_file, save):
         pdf.set_font("Arial", size=8)
         nome_txt = i.split("\\")[-1]
         nome_txt = nome_txt.split(".")[0]
-        with open(i, "r", encoding="utf-8") as file:
+        with open(i, "r", encoding="ISO-8859-1") as file:
             for line in file:
+                if line.startswith("|"):
                 # Corrigir o texto da linha, se necessário
-                corrected_line = fix_text(line)
-                pdf.cell(280, 7, txt=corrected_line, ln=True)
+                    corrected_line = fix_text(line)
+                    pdf.cell(280, 7, txt=corrected_line, ln=True)
 
         pdf.output(f"{save}\\{nome_txt}.pdf")
 
 
 if __name__ == "__main__":
     ...
-    # txt_file = "textos"
-    # pdf_file = "teste.pdf"
+    txt_file = "SPED FISCAL"
+    pdf_file = "_save"
 
-    # txt_to_pdf(txt_file)
+    txt_to_pdf(txt_file, pdf_file)
 
