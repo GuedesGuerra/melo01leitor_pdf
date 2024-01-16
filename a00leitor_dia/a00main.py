@@ -19,11 +19,14 @@ class LeitorDeGia():
         self.CoordenadasGia = self.CoordenadasGia._coordenadas_gia()
         self.campos_documento = {"a00mes_ano_referencia":[], 
                         "a01nome_empresarial" : [],
-                        "a02sem_st_no_estado":[],
-                        "a03sem_st_com_outros_estado":[],
-                        "a04total":[],
-                        "a05por_saida_com_debito_imposto":[],
-                        "a06nome_arquivo":[]}
+                        "a02sem_st_com_exterior34":[],
+                        "a03sem_st_com_exterior44":[],
+                        "a04outros39":[],
+                        "a05outros49":[],
+                        "a06total40":[],
+                        "a07total50":[],
+                        "a08por_saida_com_debito_imposto":[],
+                        "a09nome_arquivo":[]}
         self.path_dos_arquivos = path_dos_arquivos
         self.save = save
 
@@ -52,15 +55,21 @@ class LeitorDeGia():
                     elif index == 1:
                         self.campos_documento["a01nome_empresarial"].append(ponto_capturado)
                     elif index == 2:
-                        self.campos_documento["a02sem_st_no_estado"].append(ponto_capturado)
+                        self.campos_documento["a02sem_st_com_exterior34"].append(ponto_capturado)
                     elif index == 3:
-                        self.campos_documento["a03sem_st_com_outros_estado"].append(ponto_capturado)
+                        self.campos_documento["a03sem_st_com_exterior44"].append(ponto_capturado)
                     elif index == 4:
-                        self.campos_documento["a04total"].append(ponto_capturado)
+                        self.campos_documento["a04outros39"].append(ponto_capturado)
                     elif index == 5:
-                        self.campos_documento["a05por_saida_com_debito_imposto"].append(ponto_capturado)
-                    
-            self.campos_documento["a06nome_arquivo"].append(arq)
+                        self.campos_documento["a05outros49"].append(ponto_capturado)
+                    elif index == 6:
+                        self.campos_documento["a06total40"].append(ponto_capturado)
+                    elif index == 7:
+                        self.campos_documento["a07total50"].append(ponto_capturado)
+                    elif index == 8:
+                        self.campos_documento["a08por_saida_com_debito_imposto"].append(ponto_capturado)
+                        
+            self.campos_documento["a09nome_arquivo"].append(arq)
             print(self.campos_documento)
 
         df = pd.DataFrame(self.campos_documento)
@@ -139,7 +148,7 @@ if __name__ == "__main__":
     # path = r"_resources_\GIAs"
     path = r"_resources_\GIAs"
 
-    descricao = a23_descricao = (380, 315, 470, 329)
+    descricao = a23_descricao = (230, 450, 290, 470)
     # renomear_arquivos(path)
     # app.localizador_de_coordenadas(path, descricao)
     app._ininicializador(path, path)
