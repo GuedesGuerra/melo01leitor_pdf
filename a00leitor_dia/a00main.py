@@ -6,7 +6,10 @@ from subprocess import run
 from time import sleep
 from dotenv import load_dotenv
 import sys
-from a00coordenadas.a00coordenadas import CoordenadasGia
+from a00coordenadas.a00coordenada import CoordenadasGiaLink, CoordenadasGia
+
+
+
 load_dotenv()
 sys.path.append('../')
 class LeitorDeGia():
@@ -16,7 +19,9 @@ class LeitorDeGia():
 
     def _ininicializador(self, path_dos_arquivos, save):
         self.CoordenadasGia = CoordenadasGia()
+        self.CoordenadasGiaLink = CoordenadasGiaLink()
         self.CoordenadasGia = self.CoordenadasGia._coordenadas_gia()
+        self.CoordenadasGiaLink = self.CoordenadasGiaLink._coordenadas_gia()
         self.campos_documento = {"a00mes_ano_referencia":[], 
                         "a01nome_empresarial" : [],
                         "a02sem_st_com_exterior34":[],
@@ -34,7 +39,11 @@ class LeitorDeGia():
     def _captura_de_gia(self):
         VISUALIZE = True
         arquivos_pdf = self.path_dos_arquivos
+        print(arquivos_pdf)
         nome_arquivo = self.path_dos_arquivos.split("\\")[-1]
+
+        link_gia = "http://www."
+        coordenada = None
 
         lista_arquivos_pdf = [arq for arq in os.listdir(arquivos_pdf) if arq.endswith('.pdf')]
         for arq in lista_arquivos_pdf:
@@ -42,7 +51,15 @@ class LeitorDeGia():
             page: Page = doc[0]
             page.clean_contents()
 
-            for index, ponto in enumerate(self.CoordenadasGia["coord_gia"]):
+            rect = Rect((0, 0, 600, 900))
+            captura = page.get_textbox(rect)
+
+            if link_gia in captura:
+                coordenada = self.CoordenadasGiaLink
+            else:
+                coordenada = self.CoordenadasGia
+
+            for index, ponto in enumerate(coordenada["coord_gia"]):
                 rect = Rect(ponto)
                 if VISUALIZE:
                     page.draw_rect(rect, width=1.5, color=(0, 0, 1))
@@ -91,7 +108,7 @@ class LeitorDeGia():
                 page: Page = doc[0]
                 page.clean_contents()
 
-                if "201111.pdf" in arq:
+                if "01 2010.pdf" in arq:
                     rect = Rect(a23_descricao)
                     if VISUALIZE:
                         page.draw_rect(rect, width=1.5, color=(0, 0, 1))
@@ -146,9 +163,9 @@ if __name__ == "__main__":
     app = LeitorDeGia()
     lista = []
     # path = r"_resources_\GIAs"
-    path = r"_resources_\GIAs"
+    path = r"_resources_\Gia - 18.01"
 
-    descricao = a23_descricao = (230, 450, 290, 470)
+    descricao = a23_descricao =  (0, 0, 600, 900)
     # renomear_arquivos(path)
     # app.localizador_de_coordenadas(path, descricao)
     app._ininicializador(path, path)

@@ -1,7 +1,7 @@
 class CoordenadasGia:
         def __init__(self):
-            self.a00mes_ano_referencia = (350, 120, 550, 130)
-            self.a01nome_empresarial = (30, 150, 550, 160)
+            self.a00mes_ano_referencia = (350, 120, 550, 135)
+            self.a01nome_empresarial = (30, 150, 550, 165)
             self.a02sem_st_com_exterior34 = (375, 335, 460, 345)
             self.a03sem_st_com_exterior44 = (480, 335, 570, 345)
             self.a04outros39 = (480, 335, 570, 345)
